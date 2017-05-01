@@ -28,3 +28,5 @@ models/base.rb has generic attributes and methods for in memory data store imple
 The application by default runs on port 4567
 
 The cars available can be seen using /cars_ui after running the server.
+
+Brute force has been used to identify the nearest car available. That part can be optimized in terms of DSA
