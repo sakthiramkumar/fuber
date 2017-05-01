@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Fuber Cars</title>
+
+</head>
+
+<body id="home">
+
+   <canvas id="carsCanvas" ">
+       
+   </canvas>
+
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.min.js"></script>
+<script>
+
+function getCoordinates(data){
+    var coords = [];
+    for(var i = 0; i < data.length; i++){
+        var car = data[i];
+        coords.push({x : car.location.x, y : car.location.y})
+    }
+    return coords;
+}
+
+function addCarsToCanvas(data){
+    var coordinates = getCoordinates(data);
+    var pointSize = 3;
+    var ctx = document.getElementById("carsCanvas");
+
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            datasets: [{
+                label: 'Fuber Cars',
+                data: coordinates
+            }]
+        },
+        options: {
+            borderColor: "rgba(255,99,132,1)",
+            backgroundColor: "rgba(255, 99, 132, 0.2)",
+            pointRadius: 30,
+            showLines : false,
+            scales: {
+                xAxes: [{
+                    type: 'linear',
+                    position: 'bottom'
+                }]
+            }
+        }
+    });
+    
+}
+
+    jQuery.ajax({
+      url: "/cars",
+      method: 'GET',
+      success : function(data) {
+            addCarsToCanvas(data);
+        },
+      error: function(xhr) {
+            alert('Something went wrong');
+      }  
+    });
+
+</script>
+</html>
